@@ -17,7 +17,7 @@ body {
     font-size: 60px;
 }
 
-#bot-token-input {
+#input {
     background-color: #161b22;
     width: 575px;
     height: 15px;
@@ -32,11 +32,11 @@ body {
     font-size: 25px;
 }
 
-#bot-token-input:focus {
+#input:focus {
     outline: none;
 }
 
-#bot-login {
+#button {
     background-color: #238636;
     border: none;
     border-radius: 15px;
@@ -54,11 +54,11 @@ body {
     cursor: pointer;
 }
 
-#bot-login:hover {
+#button:hover {
     background-color: #1e722f;
     border-radius: 20px;
 }
 
-#bot-login:focus {
+#button:focus {
     outline: none;
 }

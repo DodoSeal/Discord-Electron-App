@@ -1,8 +1,29 @@
-const bot_login_btn = document.getElementById(`bot-login`);
+const button = document.getElementById(`button`);
+const input = document.getElementById(`input`);
+var msg;
 
-bot_login_btn.addEventListener(`click`, () =>{
-    const bot_token = document.getElementById(`bot-token-input`).value;
-    if (bot_token !== "") {
-        window.electron.bot_login(bot_token)
+button.addEventListener(`click`, () =>{
+    switch(button.value){
+        case "Login":
+            const token = input.value;
+            if (token !== "") {
+                window.electronAPI.setToken(token);
+                button.value = "Next";
+                input.placeholder = "Message";
+                input.type = "text";
+                input.value = "";
+            };
+            break;
+        case "Next":
+            msg = input.value;
+            button.value = "Send Msg";
+            input.placeholder = "Channel Id";
+            input.value = "";
+            break;
+        case "Send Msg":
+            window.electronAPI.sendMsg(msg, input.value);
+            button.value = "Next";
+                input.placeholder = "Message";
+                input.value = "";
     };
 });

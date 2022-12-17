@@ -1,5 +1,7 @@
-import { contextBridge, ipcRenderer } from 'electron';
+const { contextBridge, ipcRenderer } = require(`electron`);
+console.log(`Preload is loaded!`);
 
-contextBridge.exposeInMainWorld(`electron`, {
-    bot_login: (token: string) => ipcRenderer.send(`bot-login`, { bot_token: token })
+contextBridge.exposeInMainWorld(`electronAPI`, {
+    setToken: (token: string) => ipcRenderer.send(`setToken`, { bot_token: token }),
+    sendMsg: (content: string, channel: string) => ipcRenderer.send(`sendMsg`, { content: content, channel: channel })
 });

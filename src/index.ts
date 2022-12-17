@@ -1,12 +1,16 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import path from 'path'
 import fetch from "node-fetch"
-const webhook = "https://discord.com/api/webhooks/1053545463120396368/HovxvKFqHJF-wNACSGi4GJHSmsin6KX4y1GYd679nP4bv1KHXxUzErFY_yRZH2of_dIM";
+var token: string
 app.disableHardwareAcceleration();
 
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
     win.loadFile(`./static/html/index.html`);
@@ -21,12 +25,22 @@ app.on(`window-all-closed`, () =>{
     if (process.platform !== `darwin`) app.quit();
 });
 
-ipcMain.on(`bot-login`, (message) => {
-    fetch(webhook, {
+ipcMain.on(`setToken`, (_event, message) => {
+    token = message.bot_token;
+});
+
+ipcMain.on(`sendMsg`, (_event, message) =>{
+    const content = message.content;
+    const channel = message.channel;
+
+    fetch(`https://discord.com/api/channels/${channel}/messages`, {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            "Authorization": `Bot ${token}`,
+            "Content-Type": `application/json`
         },
-        body: JSON.stringify({ "content": message.bot_token })
-    });
+        body: JSON.stringify({
+            "content": content
+        })
+    }).catch(err => console.log(err));
 });
