@@ -1,0 +1,18 @@
+{
+  "name": "discord-client-app",
+  "version": "1.0.0",
+  "description": "Send, Delete, and Edit messages as a Discord Bot.",
+  "main": "out/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Max McDaniel",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.2",
+    "electron": "^22.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
